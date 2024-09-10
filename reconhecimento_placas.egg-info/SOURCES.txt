@@ -1,0 +1,12 @@
+setup.py
+reconhecimento_placas.egg-info/PKG-INFO
+reconhecimento_placas.egg-info/SOURCES.txt
+reconhecimento_placas.egg-info/dependency_links.txt
+reconhecimento_placas.egg-info/entry_points.txt
+reconhecimento_placas.egg-info/requires.txt
+reconhecimento_placas.egg-info/top_level.txt
+src/__init__.py
+src/config.py
+src/image_utils.py
+src/ocr_utils.py
+src/post_processing.py
