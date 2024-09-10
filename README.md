@@ -2,6 +2,7 @@
 Este projeto tem como objetivo desenvolver um sistema de reconhecimento de placas de casas utilizando técnicas de processamento de imagens e OCR (Reconhecimento Óptico de Caracteres). O sistema é capaz de processar imagens contendo números de placas e, através de segmentação, detecção de bordas e outras técnicas, identificar os números presentes.
 
 ## Estrutura do Projeto
+ ```bash
 reconhecimento-placas/
 │
 ├── src/
@@ -26,7 +27,7 @@ reconhecimento-placas/
 │
 ├── main.py                            # Script principal para execução
 └── setup.py                           # Script de setup e instalação
-
+ ```
 ## Funcionalidades
  Pré-processamento de Imagens: Aplicação de filtros de suavização e técnicas de binarização para preparação da imagem para segmentação.
  Segmentação de Imagens: Algoritmos de segmentação tradicional (thresholding) e por regiões (Watershed).
@@ -36,9 +37,9 @@ reconhecimento-placas/
 
 ## Requisitos
 Para rodar o projeto, é necessário instalar as dependências descritas no arquivo requirements.txt. Para isso, execute o seguinte comando:
-
+ ```bash
 pip install -r docs/requirements.txt
-
+ ```
 ## Principais Dependências
 OpenCV: Biblioteca principal para manipulação de imagens.
 NumPy: Utilizado para operações matemáticas e manipulação de arrays.
@@ -47,14 +48,14 @@ Tesseract-OCR: Motor de OCR para o reconhecimento de caracteres.
 ## Como Usar
 Coloque as imagens das placas que você deseja processar no diretório data/raw.
 Execute o arquivo main.py para processar as imagens:
-
+ ```bash
 python main.py
-
+ ```
 ## As imagens processadas serão salvas no diretório data/output.
 Exemplo de Execução
-
+ ```bash
 python main.py --input data/raw/ --output data/output/
-
+ ```
 
 ## Argumentos Opcionais
 --input: Diretório contendo as imagens a serem processadas (padrão: data/raw).
@@ -62,9 +63,9 @@ python main.py --input data/raw/ --output data/output/
 
 ## Testes
 O projeto inclui testes unitários para as principais funções implementadas. Para executar os testes, utilize o seguinte comando:
-
+ ```bash
 pytest src/tests/
-
+ ```
 Os testes cobrem as funções de pré-processamento, segmentação, OCR e pós-processamento.
 
 ## Estrutura de Código
