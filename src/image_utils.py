@@ -1,6 +1,40 @@
 import cv2
 import numpy as np
 
+
+def adaptive_threshold(img):
+    print("Aplicando Adaptive Thresholding...")
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
+    adaptive_thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                            cv2.THRESH_BINARY, 11, 2)
+    print("Adaptive Thresholding aplicado.")
+    return adaptive_thresh
+
+
+def simple_contour_segmentation(img):
+    print("Segmentando a imagem usando Contornos...")
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
+    _, binary_img = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY_INV)
+
+    # Encontrar contornos
+    contours, _ = cv2.findContours(binary_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Desenhar contornos
+    segmented_img = cv2.drawContours(img.copy(), contours, -1, (0, 255, 0), 1)
+
+    print("Segmentação por contornos concluída.")
+    return segmented_img
+
+
+def apply_clahe(img):
+    print("Aplicando CLAHE para melhorar o contraste...")
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+    enhanced_img = clahe.apply(gray)
+    print("CLAHE aplicado.")
+    return enhanced_img
+
+
 def preprocessing(img):
     print("Aplicando pré-processamento (conversão para tons de cinza)...")
     if len(img.shape) == 3 and img.shape[2] == 3:
@@ -12,6 +46,33 @@ def preprocessing(img):
     normalized_img = cv2.normalize(gray, None, 0, 255, cv2.NORM_MINMAX)
     print("Pré-processamento concluído.")
     return normalized_img
+
+
+#Pré-processamento avançado
+def crop_characters(img):
+    print("Recortando caracteres individualmente...")
+    # Verificar se a imagem está em escala de cinza, caso contrário, converter
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
+
+    # Converter a imagem para o formato de 8 bits se necessário
+    if gray.dtype != np.uint8:
+        gray = cv2.normalize(gray, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
+
+    # Aplicar binarização Otsu
+    _, binary_img = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    # Encontrar contornos para isolar os números
+    contours, _ = cv2.findContours(binary_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    cropped_images = []
+    for contour in contours:
+        x, y, w, h = cv2.boundingRect(contour)
+        # Recortar o número e armazená-lo
+        cropped = img[y:y + h, x:x + w]
+        cropped_images.append(cropped)
+
+    print(f"{len(cropped_images)} caracteres recortados.")
+    return cropped_images
 
 
 def blur_image(img):
